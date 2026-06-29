@@ -70,7 +70,7 @@ pct exec $CT_ID -- bash -c "
   apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
   # Clone your infrastructure files down from GitHub
-  git clone https://github.com/$GITHUB_USER/$GITHUB_REPO.git /opt/adguard-stack
+  git clone https://github.com/BK_1233/proxmox-adguard-sinkhole.git /opt/adguard-stack
 
   # Run the multi-container environment deployment blueprint
   cd /opt/adguard-stack
