@@ -42,7 +42,7 @@ pct exec $CT_ID -- bash -c "
   apt-get update && apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
 
   # Clone your exact repository directly into /opt/adguard-stack
-  git clone https://github.com/$GITHUB_USER/$GITHUB_REPO.git /opt/adguard-stack
+  git clone https://github.com/BK_1233/proxmox-adguard-sinkhole.git /opt/adguard-stack
 
   # Fire it up
   cd /opt/adguard-stack
