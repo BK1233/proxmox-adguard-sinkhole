@@ -8,7 +8,7 @@ RAM="1024"
 CORES="1"
 BRIDGE="vmbr0"
 STORAGE="local-lvm"
-GITHUB_USER="YOUR_GITHUB_USERNAME"
+GITHUB_USER="BK_1233"
 GITHUB_REPO="proxmox-adguard-sinkhole"
 # ---------------------
 
