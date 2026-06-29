@@ -11,11 +11,22 @@ STORAGE="local-lvm"
 GITHUB_USER="BK_1233"
 GITHUB_REPO="proxmox-adguard-sinkhole"
 echo "=== Creating LXC Container ==="
-# 1. Update the local cache of available templates
+# 1. Update Proxmox package list
 pveam update
 
-# 2. Tell Proxmox to download the latest available standard Debian 12 template
-pveam download local debian-12-standard
+# 2. Download the template directly from the official Proxmox mirrors using wget
+TEMPLATE_URL="http://download.proxmox.com/images/system/debian-12-standard_12.2-1_amd64.tar.zst"
+TEMPLATE_FILE="debian-12-standard_12.2-1_amd64.tar.zst"
+
+echo "Downloading template directly..."
+mkdir -p /var/lib/vz/template/cache/
+wget -N -P /var/lib/vz/template/cache/ "$TEMPLATE_URL"
+
+# 3. Create the container using the explicitly downloaded file
+pct create $CT_ID "local:vztmpl/$TEMPLATE_FILE" \
+  -cores $CORES -memory $RAM -hostname $CT_NAME \
+  -net0 name=eth0,bridge=$BRIDGE,ip=dhcp \
+  -storage $STORAGE -ostype debian -unprivileged 1 -start 1
 
 # 3. Dynamically find the exact filename Proxmox just downloaded
 LATEST_TEMPLATE=$(ls /var/lib/vz/template/cache/ | grep "debian-12-standard" | head -n 1)
