@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  adguardhome:
+    image: adguard/adguardhome:latest
+    container_name: adguardhome
+    restart: unless-stopped
+    volumes:
+      - /opt/adguard-stack/adguard/work:/opt/adguardhome/work
+      - /opt/adguard-stack/adguard/conf:/opt/adguardhome/conf
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "8080:80/tcp"
+      - "3000:3000/tcp"
+
+  sinkhole:
+    image: nginx:alpine
+    container_name: ad-sinkhole
+    restart: unless-stopped
+    volumes:
+      - /opt/adguard-stack/sinkhole/sinkhole.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "80:80/tcp"
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/adguard-stack/portainer_data:/data
+    ports:
+      - "9443:9443/tcp"
